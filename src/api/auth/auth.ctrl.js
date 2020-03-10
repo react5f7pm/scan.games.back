@@ -43,7 +43,7 @@ export const signup = async ctx => {
     await user.setPassword(password)
     await user.save()
 
-    // 응답 데이터에서 hashedPassword 제거
+    // 응답 데이터에서 password 제거
     ctx.body = user.serialize()
     
     const token = user.generateToken()
