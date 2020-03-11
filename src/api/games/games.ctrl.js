@@ -19,12 +19,27 @@ export const checkObjectId = (ctx, next) => {
  * POST /api/games
  * { 
  *   name: '이름',
- * }
+ *   producer: 'Blizzad',
+ *   thumbUrl: '',
+ *   coverUrl: '',
+ *   sales: [Sale],
+ *   platforms: ['Window', 'MacOS'],
+ *   description: '설명',
+ *   metacritic: { score: 10, url: '' },
+ *   tags: [ 'Action RPG' ],
+ *   dateCreated: ''
+  * }
  */
 export const create = async ctx => {
   const schema = Joi.object().keys({
     // 객체가 다음 필드를 가지고 있는지 검증
     name: Joi.string().required(),
+    producer: Joi.string().required(),
+    thumbUrl: Joi.string(),
+    coverUrl: Joi.string(),
+    platforms: Joi.array().items(Joi.string()).required(),
+    description: Joi.string(),
+    tags: Joi.array().items(Joi.string()),
   })
 
   // 검증 결과가 실패일 경우 오류 리턴
@@ -35,9 +50,23 @@ export const create = async ctx => {
     return
   }
 
-  const { name } = ctx.request.body
+  const { 
+    name, 
+    producer, 
+    thumbUrl, 
+    coverUrl, 
+    platforms, 
+    description, 
+    tags,
+  } = ctx.request.body
   const game = new Game({
     name,
+    producer,
+    thumbUrl,
+    coverUrl,
+    platforms,
+    description,
+    tags
   })
   try {
     await game.save()
@@ -88,10 +117,70 @@ export const list = async ctx => {
 }
 
 /*
+ * GET /api/games/search?name=abc
+ */
+export const search = async ctx => {
+  // TODO
+}
+
+/*
  * GET /api/games/:id
  */
 export const read = async ctx => {
-  // TODO
+  const { id } = ctx.params
+  try {
+    const game = await Game.findById(id).exec()
+    if (!game) {
+      ctx.status = StatusCode.NOT_FOUND
+      return
+    }
+    ctx.body = game
+  }
+  catch (e) {
+    ctx.throw(StatusCode.INTERNAL_ERROR, e)
+  }
+}
+
+/* 
+ * PATCH /api/games/:id
+ * {
+ *   metacritic: {
+ *    score: 80,
+ *    url: 'http://www.sales.com'
+ *   },
+ * }
+ */
+export const update = async ctx => {
+  const { id } = ctx.params
+
+  const metacritic = Joi.object().keys({
+    score: Joi.number().required(),
+    url: Joi.string().required()
+  })
+  const schema = Joi.object().keys({
+    metacritic: Joi.object(metacritic)
+  })
+
+  const result = Joi.validate(ctx.request.body, schema)
+  if (result.error) {
+    ctx.status = StatusCode.INVALID_PARAMS,
+    ctx.body = result.error
+    return
+  }
+
+  try {
+    const game = await Game.findByIdAndUpdate(id, ctx.request.body, {
+      new: true
+    }).exec()
+    if (!game) {
+      ctx.status = StatusCode.NOT_FOUND
+      return
+    }
+    ctx.body = game
+  }
+  catch (e) {
+    ctx.throw(StatusCode.INTERNAL_ERROR, e)
+  }
 }
 
 /*
@@ -108,16 +197,12 @@ export const remove = async ctx => {
   }
 }
 
-/* 
- * PATCH /api/games/:id
- * {
- *   name: '수정',
- * }
- */
-export const update = async ctx => {
-  // TODO 
-}
-
 export default {
-  checkObjectId, create, list, read, remove, update
+  checkObjectId, 
+  create, 
+  list, 
+  search, 
+  read, 
+  update, 
+  remove
 }

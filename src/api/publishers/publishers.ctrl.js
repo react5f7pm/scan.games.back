@@ -19,6 +19,7 @@ export const checkObjectId = (ctx, next) => {
  * POST /api/publishers
  * { 
  *   name: '이름',
+ *   homePage: 'http://www.com',
  *   description: '설명'
  * }
  */
@@ -26,7 +27,8 @@ export const create = async ctx => {
   const schema = Joi.object().keys({
     // 객체가 다음 필드를 가지고 있는지 검증
     name: Joi.string().required(),
-    description: Joi.string().required(),
+    homePage: Joi.string().required(),
+    description: Joi.string(),
   })
 
   // 검증 결과가 실패일 경우 오류 리턴
@@ -37,9 +39,10 @@ export const create = async ctx => {
     return
   }
 
-  const { name, description } = ctx.request.body
+  const { name, homePage, description } = ctx.request.body
   const publisher = new Publisher({
     name,
+    homePage,
     description,
   })
   try {
@@ -91,5 +94,7 @@ export const list = async ctx => {
 }
 
 export default {
-  checkObjectId, create, list,
+  checkObjectId, 
+  create, 
+  list,
 }

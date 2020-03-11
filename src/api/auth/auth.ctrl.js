@@ -19,6 +19,7 @@ export const signup = async ctx => {
       .min(3)
       .max(20)
       .required(),
+    email: Joi.string().required(),
     password: Joi.string().required()
   })
   const result = Joi.validate(ctx.request.body, schema)
@@ -28,7 +29,7 @@ export const signup = async ctx => {
     return
   }
 
-  const { name, password } = ctx.request.body
+  const { name, email, password } = ctx.request.body
   try {
     // Username 이 이미 존재하는지 확인
     const exists = await User.findByName(name)
@@ -39,6 +40,7 @@ export const signup = async ctx => {
 
     const user = new User({
       name,
+      email,
     })
     await user.setPassword(password)
     await user.save()
@@ -109,5 +111,7 @@ export const logout = async ctx => {
 }
 
 export default {
-  signup, login, logout
+  signup, 
+  login, 
+  logout
 }
