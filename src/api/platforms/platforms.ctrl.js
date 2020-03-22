@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import Joi from './joi'
+import Joi from 'joi'
 
 import StatusCode from '../../const/httpStatusCode.js'
 import Platform from '../../model/platform.js'

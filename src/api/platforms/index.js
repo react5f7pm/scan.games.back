@@ -1,4 +1,4 @@
-import Router from './koa-router'
+import Router from 'koa-router'
 import platformsCtrl from './platforms.ctrl.js'
 import checkLoggedIn from '../../lib/checkLoggedIn.js'
 
