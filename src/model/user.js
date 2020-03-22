@@ -7,6 +7,10 @@ const UserSchema = new Schema({
   name: String,
   email: String,
   password: String,
+  createDate: {
+    type: Date,
+    default: Date.now,
+  }
 })
 
 UserSchema.methods.setPassword = async function(passwd) {
@@ -43,5 +47,5 @@ UserSchema.statics.findByName = function(name) {
   return this.findOne({ name })
 }
 
-const User = mongoose.model('User', UserSchema)
+const User = mongoose.model('User', UserSchema, 'users')
 export default User
