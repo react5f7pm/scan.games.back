@@ -7,7 +7,7 @@ const GameSchema = new Schema({
   name: String,
   genre: String,
   developer: String,
-  producer: String, // Nexon
+  publisher: String, // Nexon
   thumbUrl: String,
   coverUrl: String,
   sales: [ SaleModel.SaleSchema ],

@@ -21,7 +21,7 @@ export const checkObjectId = (ctx, next) => {
  *   name: 'Diablo III',
  *   genre: 'Hack & Slash'
  *   developer: 'Blizzad Entertainment',
- *   producer: 'Activision Blizzad',
+ *   publisher: 'Activision Blizzad',
  *   thumbUrl: 'https://images.blizzard.com/diablo3/artworks/cd.png',
  *   coverUrl: 'https:/images.blizzard.com/diablo3/artworks/cover.png',
  *   sales: [Sale],
@@ -38,7 +38,7 @@ export const create = async ctx => {
     name: Joi.string().required(),
     genre: Joi.string(),
     developer: Joi.string().required(),
-    producer: Joi.string(),
+    publisher: Joi.string(),
     thumbUrl: Joi.string(),
     coverUrl: Joi.string(),
     os: Joi.array().items(Joi.string()).required(),
@@ -59,7 +59,7 @@ export const create = async ctx => {
     name,
     genre,
     developer,
-    producer, 
+    publisher, 
     thumbUrl, 
     coverUrl, 
     os, 
@@ -71,7 +71,7 @@ export const create = async ctx => {
     name,
     genre,
     developer,
-    producer,
+    publisher,
     thumbUrl,
     coverUrl,
     os,
@@ -131,7 +131,22 @@ export const list = async ctx => {
  * GET /api/games/search?name=abc
  */
 export const search = async ctx => {
-  // TODO
+  const { name } = ctx.query
+  
+  try {
+    const games = await Game.find({
+        $text: { $search: name } // $language: 'en'
+      })
+      .sort({ _id: -1 })
+      .limit(10)
+      .lean()
+      .exec()
+    
+    ctx.body = games
+  }
+  catch (e) {
+    ctx.throw(StatusCode.INTERNAL_ERROR, e)
+  }
 }
 
 /*
