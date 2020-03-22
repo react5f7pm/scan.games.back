@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import Joi from 'joi'
 
 import StatusCode from '../../const/httpStatusCode.js'
-import Publisher from '../../model/publisher.js'
+import Platform from '../../model/platform.js'
 
 const { ObjectId } = mongoose.Types
 
@@ -16,7 +16,7 @@ export const checkObjectId = (ctx, next) => {
 }
 
 /* 
- * POST /api/publishers
+ * POST /api/platforms
  * { 
  *   name: '이름',
  *   homePage: 'http://www.com',
@@ -40,14 +40,14 @@ export const create = async ctx => {
   }
 
   const { name, homePage, description } = ctx.request.body
-  const publisher = new Publisher({
+  const platform = new Platform({
     name,
     homePage,
     description,
   })
   try {
-    await publisher.save()
-    ctx.body = publisher
+    await platform.save()
+    ctx.body = platform
   }
   catch (e) {
     ctx.throw(StatusCode.INTERNAL_ERROR, e)
@@ -55,7 +55,7 @@ export const create = async ctx => {
 }
 
 /*
- * GET /api/publishers
+ * GET /api/platforms
  */
 export const list = async ctx => {
   // query 는 문자열이므로 숫자로 변환
@@ -72,20 +72,20 @@ export const list = async ctx => {
   }
 
   try {
-    const publishers = await Publisher.find(query)
+    const platforms = await Platform.find(query)
       .sort({ _id: -1 })
       .limit(10)
       .skip((page - 1) * 10)
       .lean() // 데이타를 MongoDB 문서 인스턴스가 아닌 JSON 형태로 조회
       .exec()
 
-    const publisherCount = await Publisher.countDocuments(query).exec()
-    ctx.set('Last-Page', Math.ceil(publisherCount / 10))
-    ctx.body = publishers
-      // .map(publisher => publisher.toJSON())
-      .map(publisher => ({
-        ...publisher,
-        description: (publisher.description.length < 200) ? publisher.description : `${publisher.description.slice(0,200)}...`
+    const platformCount = await Platform.countDocuments(query).exec()
+    ctx.set('Last-Page', Math.ceil(platformCount / 10))
+    ctx.body = platforms
+      // .map(platform => platform.toJSON())
+      .map(platform => ({
+        ...platform,
+        description: (platform.description.length < 200) ? platform.description : `${platform.description.slice(0,200)}...`
       }))
   }
   catch (e) {

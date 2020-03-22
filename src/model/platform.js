@@ -2,15 +2,15 @@ import mongoose from 'mongoose'
 
 const { Schema } = mongoose
 
-const PublisherSchema = new Schema({
+const PlatformSchema = new Schema({
   name: String,
   homePage: String,
   description: String,
-  dateCreated: {
+  createDate: {
     type: Date,
     default: Date.now
   }
 })
 
-const Publisher = mongoose.model('Publisher', PublisherSchema)
-export default Publisher
+const Platform = mongoose.model('Platform', PlatformSchema, 'platforms')
+export default Platform

@@ -18,28 +18,33 @@ export const checkObjectId = (ctx, next) => {
 /* 
  * POST /api/games
  * { 
- *   name: '이름',
- *   producer: 'Blizzad',
- *   thumbUrl: '',
- *   coverUrl: '',
+ *   name: 'Diablo III',
+ *   genre: 'Hack & Slash'
+ *   developer: 'Blizzad Entertainment',
+ *   publisher: 'Activision Blizzad',
+ *   thumbUrl: 'https://images.blizzard.com/diablo3/artworks/cd.png',
+ *   coverUrl: 'https:/images.blizzard.com/diablo3/artworks/cover.png',
  *   sales: [Sale],
- *   platforms: ['Window', 'MacOS'],
+ *   os: ['Window', 'MacOS'],
  *   description: '설명',
  *   metacritic: { score: 10, url: '' },
  *   tags: [ 'Action RPG' ],
- *   dateCreated: ''
-  * }
+ *   releaseDate: ''
+ * }
  */
 export const create = async ctx => {
   const schema = Joi.object().keys({
     // 객체가 다음 필드를 가지고 있는지 검증
     name: Joi.string().required(),
-    producer: Joi.string().required(),
+    genre: Joi.string(),
+    developer: Joi.string().required(),
+    publisher: Joi.string(),
     thumbUrl: Joi.string(),
     coverUrl: Joi.string(),
-    platforms: Joi.array().items(Joi.string()).required(),
+    os: Joi.array().items(Joi.string()).required(),
     description: Joi.string(),
     tags: Joi.array().items(Joi.string()),
+    releaseDate: Joi.date().required()
   })
 
   // 검증 결과가 실패일 경우 오류 리턴
@@ -51,22 +56,28 @@ export const create = async ctx => {
   }
 
   const { 
-    name, 
-    producer, 
+    name,
+    genre,
+    developer,
+    publisher, 
     thumbUrl, 
     coverUrl, 
-    platforms, 
+    os, 
     description, 
     tags,
+    releaseDate
   } = ctx.request.body
   const game = new Game({
     name,
-    producer,
+    genre,
+    developer,
+    publisher,
     thumbUrl,
     coverUrl,
-    platforms,
+    os,
     description,
-    tags
+    tags,
+    releaseDate
   })
   try {
     await game.save()
@@ -120,7 +131,22 @@ export const list = async ctx => {
  * GET /api/games/search?name=abc
  */
 export const search = async ctx => {
-  // TODO
+  const { name } = ctx.query
+  
+  try {
+    const games = await Game.find({
+        $text: { $search: name } // $language: 'en'
+      })
+      .sort({ _id: -1 })
+      .limit(10)
+      .lean()
+      .exec()
+    
+    ctx.body = games
+  }
+  catch (e) {
+    ctx.throw(StatusCode.INTERNAL_ERROR, e)
+  }
 }
 
 /*
