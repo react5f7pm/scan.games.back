@@ -3,6 +3,7 @@ dotEnv.config()
 
 import Koa from 'koa'
 import Router from 'koa-router'
+import cors from '@koa/cors'
 
 import mongoose from 'mongoose'
 import bodyParser from 'koa-bodyparser'
@@ -37,6 +38,9 @@ app.use(bodyParser())
 // JWT 토큰 검증
 app.use(jwtMiddleware)
 
+// CORS
+app.use(cors())
+
 // 앱 인스턴스에 라우터 적용
 app.use(router.routes()).use(router.allowedMethods())
 
@@ -44,3 +48,5 @@ const port = PORT || 4000
 app.listen(port, () => {
   console.log("listening to port %d", port)
 })
+
+export default app

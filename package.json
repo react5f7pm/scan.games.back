@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/react5f7pm/scan.games.back#readme",
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
     "eslint-config-prettier": "^6.10.0",
@@ -29,7 +30,8 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^8.0.8",
     "mongoose": "^5.9.4",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "serverless-http": "^2.3.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0"

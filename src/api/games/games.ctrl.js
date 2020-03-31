@@ -143,7 +143,7 @@ export const search = async ctx => {
       .exec()
     
     ctx.body = games
-  }
+ }
   catch (e) {
     ctx.throw(StatusCode.INTERNAL_ERROR, e)
   }
