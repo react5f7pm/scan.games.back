@@ -13,6 +13,9 @@
 
 service: game-api
 
+# plugins:
+#   - serverless-webpack
+
 provider:
   name: aws
   runtime: nodejs12.x
