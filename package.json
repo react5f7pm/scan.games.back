@@ -20,7 +20,7 @@
   "homepage": "https://github.com/react5f7pm/scan.games.back#readme",
   "dependencies": {
     "@koa/cors": "^2.2.3",
-    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "eslint-config-prettier": "^6.10.1",
     "joi": "^14.3.1",
