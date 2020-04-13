@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken'
+const jwt = require('jsonwebtoken')
 
-import StatusCode from '../const/httpStatusCode.js'
-import TokenConst from '../const/token.js'
-import User from '../model/user.js'
+const StatusCode = require('../const/httpStatusCode.js')
+const TokenConst = require('../const/token.js')
+const User = require('../model/user.js')
 
 const jwtMiddleware = async (ctx, next) => {
   const token = ctx.cookies.get('access_token')
@@ -32,4 +32,4 @@ const jwtMiddleware = async (ctx, next) => {
   }
 }
 
-export default jwtMiddleware
+module.exports = jwtMiddleware

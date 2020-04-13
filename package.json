@@ -5,14 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --experimental-modules src",
-    "start:dev": "nodemon --watch --experimental-modules src/ src/index.js"
+    "start": "node src",
+    "start:dev": "nodemon --watch src/ src/index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/react5f7pm/scan.games.back.git"
   },
-  "type": "module",
   "author": "enttt",
   "license": "MIT",
   "bugs": {
@@ -23,14 +22,14 @@
     "@koa/cors": "^2.2.3",
     "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
-    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-prettier": "^6.10.1",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
-    "koa-bodyparser": "^4.2.1",
+    "koa-bodyparser": "^4.3.0",
     "koa-router": "^8.0.8",
-    "mongoose": "^5.9.4",
-    "nodemon": "^2.0.2",
+    "mongoose": "^5.9.7",
+    "nodemon": "^2.0.3",
     "serverless-http": "^2.3.2"
   },
   "devDependencies": {

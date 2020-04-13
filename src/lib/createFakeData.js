@@ -1,6 +1,6 @@
-import Game from './model/game.js'
+const Game = require('./model/game.js')
 
-export default function createFakeData() {
+function createFakeData() {
   const games = [...Array(30).keys()].map(i => ({
     name: `Game #${i}`,
     producer: `Blizzad Partner #${i}`,
@@ -11,3 +11,5 @@ export default function createFakeData() {
     console.log(docs)
   })
 }
+
+exports.createFakeData = createFakeData

@@ -1,12 +1,12 @@
-import mongoose from 'mongoose'
-import Joi from 'joi'
+const mongoose = require('mongoose')
+const Joi = require('joi')
 
-import StatusCode from '../../const/httpStatusCode.js'
-import Game from '../../model/game.js'
+const StatusCode = require('../../const/httpStatusCode.js')
+const Game = require('../../model/game.js')
 
 const { ObjectId } = mongoose.Types
 
-export const checkObjectId = (ctx, next) => {
+const checkObjectId = (ctx, next) => {
   const { id } = ctx.params
   if (!ObjectId.isValid(id)) {
     ctx.status = StatusCode.INVALID_PARAMS
@@ -32,7 +32,7 @@ export const checkObjectId = (ctx, next) => {
  *   releaseDate: ''
  * }
  */
-export const create = async ctx => {
+const create = async ctx => {
   const schema = Joi.object().keys({
     // 객체가 다음 필드를 가지고 있는지 검증
     name: Joi.string().required(),
@@ -91,7 +91,7 @@ export const create = async ctx => {
 /*
  * GET /api/games
  */
-export const list = async ctx => {
+const list = async ctx => {
   // query 는 문자열이므로 숫자로 변환
   const page = parseInt(ctx.query.page || '1', 10)
   if (page < 1) {
@@ -130,7 +130,7 @@ export const list = async ctx => {
 /*
  * GET /api/games/search?name=abc
  */
-export const search = async ctx => {
+const search = async ctx => {
   const { name } = ctx.query
   
   try {
@@ -152,7 +152,7 @@ export const search = async ctx => {
 /*
  * GET /api/games/:id
  */
-export const read = async ctx => {
+const read = async ctx => {
   const { id } = ctx.params
   try {
     const game = await Game.findById(id).exec()
@@ -176,7 +176,7 @@ export const read = async ctx => {
  *   },
  * }
  */
-export const update = async ctx => {
+const update = async ctx => {
   const { id } = ctx.params
 
   const metacritic = Joi.object().keys({
@@ -212,7 +212,7 @@ export const update = async ctx => {
 /*
  * DELETE /api/games/:id
  */
-export const remove = async ctx => {
+const remove = async ctx => {
   const { id } = ctx.params
   try {
     await Game.findByIdAndDelete(id).exec()
@@ -223,12 +223,10 @@ export const remove = async ctx => {
   }
 }
 
-export default {
-  checkObjectId, 
-  create, 
-  list, 
-  search, 
-  read, 
-  update, 
-  remove
-}
+exports.checkObjectId = checkObjectId
+exports.create = create
+exports.list = list
+exports.search = search
+exports.read = read
+exports.update = update
+exports.remove = remove

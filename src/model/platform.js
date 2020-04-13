@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
@@ -13,4 +13,4 @@ const PlatformSchema = new Schema({
 })
 
 const Platform = mongoose.model('Platform', PlatformSchema, 'platforms')
-export default Platform
+module.exports = Platform

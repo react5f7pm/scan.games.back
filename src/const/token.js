@@ -3,4 +3,4 @@ const TokenConst = {
   DAYS_REQUIRE_REFRESH: 60 * 60 * 24 // 1일
 }
 
-export default TokenConst
+module.exports = TokenConst

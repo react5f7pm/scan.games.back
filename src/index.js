@@ -1,15 +1,15 @@
-import dotEnv from 'dotenv'
+const dotEnv = require('dotenv')
 dotEnv.config()
 
-import Koa from 'koa'
-import Router from 'koa-router'
-import cors from '@koa/cors'
+const Koa = require('koa')
+const Router = require('koa-router')
+const cors = require('@koa/cors')
 
-import mongoose from 'mongoose'
-import bodyParser from 'koa-bodyparser'
+const mongoose = require('mongoose')
+const bodyParser = require('koa-bodyparser')
 
-import api from './api/index.js'
-import jwtMiddleware from './lib/jwtMiddleware.js'
+const api = require('./api/index.js')
+const jwtMiddleware = require('./lib/jwtMiddleware.js')
 
 const { PORT, MONGO_URI } = process.env
 
@@ -49,4 +49,4 @@ app.listen(port, () => {
   console.log("listening to port %d", port)
 })
 
-export default app
+module.exports = app
