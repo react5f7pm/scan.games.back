@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import SaleModel from './sale.js'
+const mongoose = require('mongoose')
+const SaleModel = require('./sale.js')
 
 const { Schema } = mongoose
 
@@ -30,4 +30,4 @@ const GameSchema = new Schema({
 
 const Game = mongoose.model('Game', GameSchema, 'games')
 
-export default Game
+module.exports = Game

@@ -1,8 +1,8 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
-export const SaleSchema = new Schema({
+const SaleSchema = new Schema({
   platform: {
     _id: mongoose.Types.ObjectId, // Steam
     name: String,
@@ -15,9 +15,7 @@ export const SaleSchema = new Schema({
   }
 })
 
-export const Sale = mongoose.model('Sale', SaleSchema, 'sales')
+const Sale = mongoose.model('Sale', SaleSchema, 'sales')
 
-export default { 
-  SaleSchema, 
-  Sale 
-}
+exports.SaleSchema = SaleSchema
+exports.Sale = Sale

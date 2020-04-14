@@ -1,8 +1,8 @@
-import Joi from 'joi'
+const Joi = require('joi')
 
-import StatusCode from '../../const/httpStatusCode.js'
-import TokenConst from '../../const/token.js'
-import User from '../../model/user.js'
+const StatusCode = require('../../const/httpStatusCode.js')
+const TokenConst = require('../../const/token.js')
+const User = require('../../model/user.js')
 
 /*
  * POST /api/auth/signup
@@ -11,7 +11,7 @@ import User from '../../model/user.js'
  *   password: 'my-pass'
  * }
  */
-export const signup = async ctx => {
+const signup = async ctx => {
   // Request Body 검증
   const schema = Joi.object().keys({
     name: Joi.string()
@@ -66,7 +66,7 @@ export const signup = async ctx => {
  *   password: 'my-pass'
  * }
  */
-export const login = async ctx => {
+const login = async ctx => {
   const { name, password } = ctx.request.body
 
   // username, password 가 없으면 에러 처리
@@ -105,13 +105,11 @@ export const login = async ctx => {
 /*
  * POST /api/auth/logout
  */
-export const logout = async ctx => {
+const logout = async ctx => {
   ctx.cookies.set('access_token')
   ctx.status = StatusCode.EMPTY_RESPONSE
 }
 
-export default {
-  signup, 
-  login, 
-  logout
-}
+exports.signup = signup
+exports.login = login
+exports.logout = logout

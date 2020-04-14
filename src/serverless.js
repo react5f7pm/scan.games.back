@@ -1,4 +1,11 @@
-import serverless from 'serverless-http';
-import app from 'index';
+const serverless = require('serverless-http')
+const app = require('./index.js')
 
-export const handler = serverless(app);
+const handler = serverless(app);
+module.exports.handler = async (event, context) => {
+  console.log('event:' + JSON.stringify(event))
+  const result = await handler(event, context);
+
+  console.log('result:' + JSON.stringify(result))
+  return result;
+};

@@ -10,4 +10,4 @@ const StatusCode = {
   INTERNAL_ERROR: 500, // 서버 내부 오류
 }
 
-export default StatusCode
+module.exports = StatusCode

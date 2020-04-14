@@ -1,4 +1,4 @@
-import StatusCode from '../const/httpStatusCode.js'
+const StatusCode = require('../const/httpStatusCode.js')
 
 const checkLoggedIn = (ctx, next) => {
   if (!ctx.state.user) {
@@ -8,4 +8,4 @@ const checkLoggedIn = (ctx, next) => {
   return next()
 }
 
-export default checkLoggedIn
+module.exports = checkLoggedIn

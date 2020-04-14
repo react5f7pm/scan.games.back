@@ -1,6 +1,6 @@
-import Router from 'koa-router'
-import gamesCtrl from './games.ctrl.js'
-import checkLoggedIn from '../../lib/checkLoggedIn.js'
+const Router = require('koa-router')
+const gamesCtrl = require('./games.ctrl.js')
+const checkLoggedIn = require('../../lib/checkLoggedIn.js')
 
 const games = new Router()
 
@@ -14,4 +14,4 @@ game.patch('/', checkLoggedIn, gamesCtrl.update)
 
 games.use('/:id', game.routes())
 
-export default games
+module.exports = games
