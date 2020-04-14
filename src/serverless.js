@@ -3,9 +3,9 @@ const app = require('./index.js')
 
 const handler = serverless(app);
 module.exports.handler = async (event, context) => {
-  console.log('event:' + event)
+  console.log('event:' + JSON.stringify(event))
   const result = await handler(event, context);
 
-  console.log('result:' + result)
+  console.log('result:' + JSON.stringify(result))
   return result;
 };

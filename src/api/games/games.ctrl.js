@@ -115,6 +115,7 @@ const list = async ctx => {
 
     const gameCount = await Game.countDocuments(query).exec()
     ctx.set('Last-Page', Math.ceil(gameCount / 10))
+    
     ctx.body = games
       // .map(game => game.toJSON())
       .map(game => ({
