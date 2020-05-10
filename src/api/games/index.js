@@ -6,6 +6,7 @@ const games = new Router()
 
 games.post('/', checkLoggedIn, gamesCtrl.create)
 games.get('/', gamesCtrl.list)
+games.get('/search', gamesCtrl.search)
 
 const game = new Router()
 game.get('/', gamesCtrl.read)

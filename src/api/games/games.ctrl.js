@@ -132,11 +132,13 @@ const list = async ctx => {
  * GET /api/games/search?name=abc
  */
 const search = async ctx => {
-  const { name } = ctx.query
-  
+  const { keyword } = ctx.query
+
   try {
     const games = await Game.find({
-        $text: { $search: name } // $language: 'en'
+        // $text 쿼리의 경우 먼저 검색할 컬럼들로 인덱싱 작업이 필요
+        // $text: { $search: name }
+        name: { $regex: keyword, $options: "i" }
       })
       .sort({ _id: -1 })
       .limit(10)

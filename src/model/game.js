@@ -5,18 +5,18 @@ const { Schema } = mongoose
 
 const GameSchema = new Schema({
   name: String,
-  genre: String,
-  developer: String,
   publisher: String, // Nexon
   thumbUrl: String,
   coverUrl: String,
   sales: [ SaleModel.SaleSchema ],
-  os: [ String ],
+  platforms: [ String ],
   description: String,
   metacritic: {
     score: Number,
     url: String,
   },
+  officialPrice: Number,
+  genres: [ String ],
   tags: [ String ],
   releaseDate: {
     type: Date,
