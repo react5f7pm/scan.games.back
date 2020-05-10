@@ -3,11 +3,12 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const SaleSchema = new Schema({
-  platform: {
-    _id: mongoose.Types.ObjectId, // Steam
-    name: String,
+  platform: String,
+  game: {
+    type: mongoose.Types.ObjectId,
+    ref: 'Game',
   },
-  gameUuid: String, // Unique game id in platform
+  gameUuid: String,
   price: Number,
   createDate: {
     type: Date,
