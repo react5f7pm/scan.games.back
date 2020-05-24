@@ -52,3 +52,6 @@ typings/
 .tern-port
 
 .vscode/
+
+# 디비 접속 정보와 같은 파일은 로컬로 사용. 운영 환경에서는 AWS Lambda 환경변수로 설정해 사용
+.env
