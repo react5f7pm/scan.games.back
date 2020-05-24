@@ -1,0 +1,3 @@
+[submodule "src/models"]
+	path = src/models
+	url = https://github.com/react5f7pm/scan.games.model.git
