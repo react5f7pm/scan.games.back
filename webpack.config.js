@@ -1,27 +1,26 @@
 const path = require('path');
 
 const slsw = require('serverless-webpack');
-const webpack = require('webpack');
+const nodeExternals = require('webpack-node-externals');
+
 
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
-  resolve: {
-    modules: [path.resolve('./src'), 'node_modules'],
-  },
+  mode: 'production',
+  externals: [nodeExternals()],
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.(js|jsx)$/,
-        include: __dirname,
-        exclude: /node_modules\/(?!(koa-bodyparser)\/).*/,
-        loader: 'babel-loader',
-        options: {
-          plugins: ['transform-runtime'],
-          presets: ['env'],
-        },
-      },
-    ],
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ],
+      }
+    ]
   },
   output: {
     libraryTarget: 'commonjs',
