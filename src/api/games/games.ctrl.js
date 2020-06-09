@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 const Joi = require('joi')
 
 const StatusCode = require('../../const/httpStatusCode.js')
-const Game = require('../../model/game.js')
+import GameSchema from '../../models/game'
+const Game = mongoose.model('Game', GameSchema, 'games')
 
 const { ObjectId } = mongoose.Types
 

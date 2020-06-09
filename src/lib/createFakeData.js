@@ -1,4 +1,6 @@
-const Game = require('./model/game.js')
+const mongoose = require('mongoose')
+import GameSchema from '../../models/game'
+const Game = mongoose.model('Game', GameSchema, 'games')
 
 function createFakeData() {
   const games = [...Array(30).keys()].map(i => ({
